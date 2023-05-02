@@ -1,12 +1,13 @@
  const inquirer = require('inquirer');
  const mysql = require('mysql2')
  const fs = require('fs');
+ const env = require('dotenv').config();
  const cTable = require('console.table');
 
 const dbConfig = {
     host: "127.0.0.1",
     user: "root",
-    password: "Pepper586!@",
+    password: 'Pepper586!@',
     database: "sqlDepartments"
 };
 
@@ -27,39 +28,26 @@ const dbConfig = {
     },
     
    
- ]).then(async (response) => {
-  console.log(`Performing action: ${response.action}`);
-
-  const connection = await mysql.createConnection(dbConfig);
-
-  switch (response.action) {
-    case "View All Departments":
-      const [deptRows] = await connection.execute("SELECT * FROM departments");
-      console.table(deptRows);
+ ]).then((answer) => {
+  switch (answer.action) {
+    case 'View all departments':
+      connection.query('SELECT * FROM department', (err, results) => {
+        if (err) throw err;
+        console.table(results);
+        connection.end();
+      });
       break;
-
-    case "View All Roles":
-      const [roleRows] = await connection.execute("SELECT * FROM roles");
-      console.table(roleRows);
+    case 'Add employee':
+      // code for adding a new employee
       break;
-
-    case "View All Employees":
-      const [empRows] = await connection.execute("SELECT * FROM employees");
-      console.table(empRows);
+    case 'Update employee role':
+      // code for updating an employee's role
       break;
-
-    case "Add Role":
-      
-      break;
-
-    case "Add Department":
-      
-      break;
-
-    default:
-      console.log(`Invalid action: ${response.action}`);
+    case 'Exit':
+      connection.end();
       break;
   }
-
-  await connection.end();
+})
+.catch((err) => {
+  console.log(err);
 });
