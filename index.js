@@ -8,41 +8,59 @@ const dbConfig = {
     host: "127.0.0.1",
     user: "root",
     password: 'Pepper586!@',
-    database: "sqlDepartments"
+    database: "sql_departments"
 };
 
- inquirer.prompt([
+
+const connection = mysql.createConnection(dbConfig);
+function init() {
+  inquirer.prompt([
     {
         name: "views",
         message: "What would you like to do?",
         type: "list",
         choices: [
             "View All Departments",
-            "Viea All Roles",
+            "View All Roles",
             "View All Employees",
             "Add Role",
             "View All Departments",
-            "Add Department"
+            "Add Department",
+            "Exit"
         ],
         
     },
     
    
  ]).then((answer) => {
-  switch (answer.action) {
-    case 'View all departments':
+  switch (answer.views) {
+    case 'View All Departments':
       connection.query('SELECT * FROM department', (err, results) => {
         if (err) throw err;
         console.table(results);
-        connection.end();
+        init();
       });
       break;
-    case 'Add employee':
-      // code for adding a new employee
+    case 'View All Roles':
+      connection.query('SELECT * FROM role', (err, results) => {
+        if (err) throw err;
+        console.table(results);
+        init();
+      });
       break;
-    case 'Update employee role':
-      // code for updating an employee's role
+    case 'View All Employees':
+      connection.query('SELECT * FROM role', (err, results) => {
+        if (err) throw err;
+        console.table(results);
+        init();
+      });
       break;
+      case 'Add Role':
+        connection.query('SELECT * FROM role', (err, results) => {
+          if (err) throw err;
+          console.table(results);
+          init();
+        });
     case 'Exit':
       connection.end();
       break;
@@ -51,3 +69,10 @@ const dbConfig = {
 .catch((err) => {
   console.log(err);
 });
+}
+
+init();
+
+
+
+ 

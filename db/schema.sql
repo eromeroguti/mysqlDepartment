@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS sqlDepartments;
-CREATE DATABASE sqlDepartments;
+DROP DATABASE IF EXISTS sql_departments;
+CREATE DATABASE sql_departments;
 
-USE sqlDepartments;
+USE sql_departments;
 
 CREATE TABLE department (
     id INT NOT NULL PRIMARY KEY,
