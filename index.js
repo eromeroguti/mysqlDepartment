@@ -6,8 +6,8 @@
 
 const dbConfig = {
     host: "127.0.0.1",
-    user: "root",
-    password: 'Pepper586!@',
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
     database: "sql_departments"
 };
 
