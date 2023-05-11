@@ -24,7 +24,7 @@ function init() {
             "View All Roles",
             "View All Employees",
             "Add Role",
-            "View All Departments",
+            "Add Employee",
             "Add Department",
             "Exit"
         ],
@@ -49,7 +49,7 @@ function init() {
       });
       break;
     case 'View All Employees':
-      connection.query('SELECT * FROM role', (err, results) => {
+      connection.query('SELECT * FROM employee', (err, results) => {
         if (err) throw err;
         console.table(results);
         init();
